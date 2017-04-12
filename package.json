@@ -2,7 +2,7 @@
   "name": "troubleshooter",
   "version": "0.1.0",
   "private": true,
-  "description": "This a help desk application designed to support an organization's employees",
+  "description": "This a help desk application meant for providing internal support services",
   "author": "Michael Wanyoike",
   "license": "MIT",
   "repository": {
