@@ -5,24 +5,5 @@
   "paginate": {
     "default": 10,
     "max": 50
-  },
-  "authentication": {
-    "secret": "ba8e9f7b359889b219a32fc6db3f4068a90852af0bae2934e57dd44c16bc62f47549d00ab30f4859894a8ae3fed1bf98a6c8118ee03f67eafd898fcf016031b657d5e4d9fb0f8a1055e15570e99469c870ede2f13da0d9111b07572caa58f807c3e86bf31f328f5d5d68b3648b19fa67b38b6feac412e24a892cb540a604988250426800c47efa0d640e20507fb9702fe011c779efb51832c6e5255dea77a5459e41b9d74b4bb71df46f10e03d5435d1249dbb1091598b45ba1c980f366216b0d2e60259d949866e2d203386573afbd33d10e9efb0cd6f58a5258aec7d3ffc42f1ab0381c59cea6d074ba4ed0fdf9ac05db5a59649fe535b11565251934171a5",
-    "strategies": [
-      "jwt"
-    ],
-    "path": "/authentication",
-    "service": "users",
-    "jwt": {
-      "header": {
-        "type": "access"
-      },
-      "audience": "https://yourdomain.com",
-      "subject": "anonymous",
-      "issuer": "feathers",
-      "algorithm": "HS256",
-      "expiresIn": "1d"
-    }
-  },
-  "mongodb": "mongodb://localhost:27017/troubleshooter"
+  }
 }
