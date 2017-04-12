@@ -1,25 +1,33 @@
 import { observable, action } from 'mobx';
-import { client, service } from './client';
+import { feathersClient, service } from './client';
 
-export default class AuthStore {
-
-  userService = service('user');
+class AuthStore {
 
   @observable users = [];
   @observable user = {};
+  @observable errors = {}
+
+  client = feathersClient();
+  userService = service('user');
 
   @action
   updateUser = (data = null) => {
     this.user = data || {};
-    client.set('user', this.user);
+    this.client.set('user', this.user);
   }
 
   @action
   login = ({username, password}) => {
-    client.authenticate({ strategy: 'local', username, password })
-      .then(response => client.passport.verifyJWT(response.accessToken))
+    this.client.authenticate({ strategy: 'local', username, password })
+      .then(response => this.client.passport.verifyJWT(response.accessToken))
       .then(data => this.setCookie(data))
       .then(payload => this.userService.get(payload.userId))
-      .then(user => this.updateUser(user));
+      .then(user => this.updateUser(user))
+      .catch(error => {
+        console.log("error authenticating", error);
+        this.errors = {global : error.message};
+      });
   }
 }
+
+export default new AuthStore();
