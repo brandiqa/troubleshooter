@@ -25,6 +25,25 @@ module.exports = function () {
 
   service.hooks(hooks);
 
+  // console.log('lets create admin');
+
+  const adminUser = {
+    firstName: 'Admin',
+    username: 'admin',
+    email: 'admin@example.com',
+    password: 'admin'
+  };
+
+  service.find({})
+    .then(function(response) {
+      if(response.data.length === 0) {
+        service.create(adminUser)
+          .then(function(){
+            console.info('Default Admin User Created...'); // eslint-disable-line no-console
+          });
+      }
+    });
+
   if (service.filter) {
     service.filter(filters);
   }
