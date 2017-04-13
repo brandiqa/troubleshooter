@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import DevTools from 'mobx-react-devtools';
+// import DevTools from 'mobx-react-devtools';
 import { NavLink } from 'react-router-dom';
-import { Sidebar, Segment, Menu, Image, Icon } from 'semantic-ui-react';
+import { Sidebar, Segment, Menu, Image, Icon, Button } from 'semantic-ui-react';
 import { Route } from 'react-router-dom';
-import DashboardPage from './pages/dashboard-page';
 import UsersPage from './pages/users-page';
+import DashboardPage from './pages/dashboard-page';
 import logo from './logo-inverted.svg';
 import icon from './icon.svg';
 
@@ -26,9 +26,14 @@ class Dashboard extends Component {
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic>
-              <Image src={logo} size="small"/>
+              <Menu secondary>
+                <Menu.Header><Image src={logo} size="small"/></Menu.Header>
+                <Menu.Item>
+                  <Button basic>Logout</Button>
+                </Menu.Item>
+              </Menu>
               <hr/>
-              <DevTools/>
+              {/* <DevTools/> */}
               <Route component={DashboardPage} exact path="/" />
               <Route component={UsersPage} path="/users" />
             </Segment>
