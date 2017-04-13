@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import { feathersClient, service } from './client';
+import cookie from 'js-cookie';
 
 class AuthStore {
 
@@ -9,6 +10,14 @@ class AuthStore {
 
   client = feathersClient();
   userService = service('user');
+  cookieName = 'ssrToken';
+  jwt = null;
+
+  setCookie(data) {
+    this.jwt = data;
+    cookie.set(this.cookieName, data);
+    return data;
+  }
 
   @action
   updateUser = (data = null) => {
@@ -17,11 +26,11 @@ class AuthStore {
   }
 
   @action
-  login = ({username, password}) => {
-    this.client.authenticate({ strategy: 'local', username, password })
+  login = ({email, password}) => {
+    this.client.authenticate({ strategy: 'local', email, password })
       .then(response => this.client.passport.verifyJWT(response.accessToken))
       .then(data => this.setCookie(data))
-      .then(payload => this.userService.get(payload.userId))
+      .then(data => this.userService.get(data.userId))
       .then(user => this.updateUser(user))
       .catch(error => {
         console.log("error authenticating", error);

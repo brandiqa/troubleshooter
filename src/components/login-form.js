@@ -7,16 +7,18 @@ import InputField from './input-field';
 import authStore from '../stores/auth-store';
 
 const fields = {
-  username: {
-    name: 'username',
-    label: 'Username',
-    placeholder: 'Username',
-    rules:'string|required'
+  email: {
+    name: 'email',
+    label: 'Email',
+    placeholder: 'Email',
+    type: 'email',
+    rules:'email|string|required'
   },
   password: {
     name: 'password',
-    label: 'password',
-    placeholder: 'password',
+    label: 'Password',
+    placeholder: 'Password',
+    type: 'password',
     rules:'string|required'
   }
 }
@@ -54,7 +56,7 @@ class LoginForm extends Component {
         <h1>Login</h1>
         {authStore.errors.global && errorMessage}
         <Form onSubmit={form.onSubmit}>
-          <InputField field={form.$('username')} />
+          <InputField field={form.$('email')} />
           <InputField field={form.$('password')} />
           <Button primary>Sign In</Button>
         </Form>
