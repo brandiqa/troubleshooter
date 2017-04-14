@@ -10,16 +10,18 @@ import { BrowserRouter} from 'react-router-dom';
 @observer
 class App extends Component {
 
+  componentWillMount() {
+    authStore.sessionAuth();
+  }
 
   login = (
     <Route component={LoginPage} path="/" />
   );
 
   render() {
-    const isAuthenticated = !_.isEmpty(authStore.user);
     return (
       <BrowserRouter>
-          {isAuthenticated ? <Dashboard /> : this.login }
+          { authStore.isAuthenticated ? <Dashboard /> : this.login }
       </BrowserRouter>
     );
   }
