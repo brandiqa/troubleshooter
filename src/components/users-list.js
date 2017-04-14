@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Message, Icon, Card } from 'semantic-ui-react';
 import UserCard from './user-card';
+import store from '../stores/auth-store';
 
 @observer
 class UsersList extends Component {
 
   componentDidMount() {
-    this.props.store.fetchUsers();
+    store.fetchUsers();
   }
 
   render() {
-    const { users, loading, errors, deleteUser } = this.props.store;
+    const { users, loading, errors, deleteUser } = store;
 
     const fetchingMessage = (
       <Message icon info>
