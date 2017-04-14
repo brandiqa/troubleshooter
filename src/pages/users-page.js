@@ -6,7 +6,7 @@ class UsersPage extends Component {
   render() {
     return (
      <div>
-       <h2>List of Users</h2>
+       <h2>User Administration</h2>
        <UsersList store={authStore}/>
      </div>
     )

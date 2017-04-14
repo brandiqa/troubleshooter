@@ -6,6 +6,7 @@ class AuthStore {
 
   @observable users = [];
   @observable user = {};
+  @observable authPending = true;
   @observable loading = false;
   @observable errors = {}
 
@@ -20,7 +21,10 @@ class AuthStore {
       .then(data => this.userService.get(data.userId))
       .then(user => this.user = user)
       .catch(err => console.info('no valid session found'))
-      .then(() => this.loading = false)
+      .then(() => {
+        this.loading = false
+        this.authPending = false
+      })
   }
 
   @action
