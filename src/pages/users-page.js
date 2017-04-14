@@ -7,7 +7,7 @@ class UsersPage extends Component {
   render() {
     return (
      <div>
-       <div className="ui two item menu">
+       <div className="ui menu basic teal">
           <NavLink className="item" activeClassName="active" exact to="/users">Users List</NavLink>
           <NavLink className="item" activeClassName="active" exact to="/users/new">Add User</NavLink>
         </div>

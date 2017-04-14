@@ -16,7 +16,7 @@ export default function UserCard({user, deleteUser}) {
       </Card.Content>
       <Card.Content extra>
         <div className="ui two buttons">
-          <Link to={`/users/edit/${user._id}`} className="ui basic button green">Edit</Link>
+          <Link to={`/users/edit/${user._id}`} className="ui basic button teal">Edit</Link>
           <Button basic color="red" onClick={() => deleteUser(user._id)} >Delete</Button>
         </div>
       </Card.Content>

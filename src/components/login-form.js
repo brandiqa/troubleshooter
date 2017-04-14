@@ -57,7 +57,7 @@ class LoginForm extends Component {
         <Form onSubmit={form.onSubmit} loading={authStore.loading}>
           <InputField field={form.$('email')} />
           <InputField field={form.$('password')} />
-          <Button primary>Sign In</Button>
+          <Button primary disabled={form.isPristine}>Sign In</Button>
         </Form>
       </div>
     );
