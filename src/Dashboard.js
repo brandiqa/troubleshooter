@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import DevTools from 'mobx-react-devtools';
+// import DevTools from 'mobx-react-devtools';
 import { NavLink } from 'react-router-dom';
 import { Sidebar, Segment, Menu, Image, Icon, Button } from 'semantic-ui-react';
 import { Route } from 'react-router-dom';
 import UsersPage from './pages/users-page';
 import DashboardPage from './pages/dashboard-page';
+import authStore from './stores/auth-store';
 import logo from './logo-inverted.svg';
 import icon from './icon.svg';
 
@@ -13,7 +14,6 @@ class Dashboard extends Component {
     return (
       <div>
         <Sidebar.Pushable as={Segment} style={{height:"100vh"}}>
-          <DevTools/>
           <Sidebar as={Menu} width='thin' vertical visible inverted>
             <Segment basic inverted style={{ height: "80px", marginBottom:0}}>
               <Image src={icon} size="small" centered style={{width:"50px"}}/>
@@ -31,7 +31,7 @@ class Dashboard extends Component {
                 <Menu.Header><Image src={logo} size="small"/></Menu.Header>
                 <Menu.Menu position="right">
                   <Menu.Item>
-                    <Button basic>Logout</Button>
+                    <Button basic onClick={() => authStore.logout()}>Logout</Button>
                   </Menu.Item>
                 </Menu.Menu>
               </Menu>

@@ -35,6 +35,12 @@ class AuthStore {
     .then(() => this.loading = false);
   }
 
+  @action
+  logout = () => {
+    this.client.logout()
+      .then(() => this.user = {})
+  }
+
   @computed get isAuthenticated() {
     return !_.isEmpty(this.user);
   }
