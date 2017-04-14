@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Message, Icon } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 import { observer } from 'mobx-react';
 import MobxReactForm from 'mobx-react-form';
 import validatorjs from 'validatorjs';
@@ -44,9 +44,8 @@ class LoginForm extends Component {
 
     const errorMessage = (
       <Message icon negative>
-        <Icon name='warning' />
         <Message.Content>
-           <Message.Header>{authStore.errors.global}</Message.Header>
+           {authStore.errors.global}
        </Message.Content>
       </Message>
     );
@@ -55,7 +54,7 @@ class LoginForm extends Component {
       <div>
         <h1>Login</h1>
         {authStore.errors.global && errorMessage}
-        <Form onSubmit={form.onSubmit}>
+        <Form onSubmit={form.onSubmit} loading={authStore.loading}>
           <InputField field={form.$('email')} />
           <InputField field={form.$('password')} />
           <Button primary>Sign In</Button>
