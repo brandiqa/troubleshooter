@@ -5,9 +5,9 @@ import validatorjs from 'validatorjs';
 import { Icon, Form, Button, Grid, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import InputField from './input-field';
-import store from '../stores/auth-store';
+import store from '../stores/users-store';
 
-const fields = {
+const editFields = {
   firstName: {
     name: 'firstName',
     label: 'First Name',
@@ -35,19 +35,27 @@ const fields = {
     placeholder: 'Email',
     type: 'email',
     rules:'email|string|required'
-  },
-  password: {
-    name: 'password',
-    label: 'Password',
-    placeholder: 'Password',
-    type: 'password',
-    rules:'string|required'
   }
+}
+
+const password = {
+  name: 'password',
+  label: 'Password',
+  placeholder: 'Password',
+  type: 'password',
+  rules:'string|required'
 }
 
 class MobxForm extends MobxReactForm {
   onSuccess(form) {
-    store.createUser(form.values())
+    // const { _id } = form.values()
+    // console.log(form.values())
+    if(store.user._id){
+      store.updateUser(form.values())
+    }
+    else {
+      store.createUser(form.values())
+    }
   }
 }
 
@@ -55,11 +63,21 @@ class MobxForm extends MobxReactForm {
 class UserForm extends Component {
 
   form = null;
+  state = { enablePassword: false};
 
   componentWillMount() {
+    let fields = null;
     const plugins = { dvr: validatorjs };
+    const { _id } = this.props;
+    if(_id){
+      fields = editFields;
+    } else {
+      fields = { ...editFields, password }
+    }
     this.form = new MobxForm({fields},{plugins});
+    this.setState({ enablePassword: fields.password != null })
   }
+
 
   componentWillReceiveProps = (nextProps) => {
     const user = nextProps.user;
@@ -68,6 +86,7 @@ class UserForm extends Component {
 
   render() {
     const form = this.form;
+    const { enablePassword } = this.state;
     const { redirect, loading, errors, user } = store;
 
     const errorMessage = (
@@ -80,7 +99,7 @@ class UserForm extends Component {
       </Message>
     );
 
-    const formComponent = (
+    const userForm = (
       <Form onSubmit={form.onSubmit} loading={loading}>
         <Form.Group widths='equal'>
           <InputField field={form.$('firstName')} error={errors.firstName} />
@@ -88,7 +107,7 @@ class UserForm extends Component {
         </Form.Group>
         <InputField field={form.$('username')} error={errors.username} />
         <InputField field={form.$('email')} error={errors.email} />
-        <InputField field={form.$('password')} error={errors.password} />
+        {enablePassword && <InputField field={form.$('password')} error={errors.password}/>}
         <Button color="teal" type='submit' disabled={form.isPristine}>Save</Button>
       </Form>
     );
@@ -99,7 +118,7 @@ class UserForm extends Component {
           <Grid.Column>
             <h3 style={{marginTop:"1em"}}>{ user._id ? 'Edit User' : 'Add New User' }</h3>
             {errors.global && errorMessage }
-            {formComponent}
+            { userForm }
           </Grid.Column>
         </Grid>
       </div>
@@ -107,7 +126,7 @@ class UserForm extends Component {
 
     return (
       <div>
-        { redirect ? <Redirect to="/" /> : grid }
+        { redirect ? <Redirect to="/users" /> : grid }
       </div>
     )
   }

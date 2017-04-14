@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import UsersList from '../components/users-list';
-import UserForm from '../components/user-form';
+import UserFormContainer from '../containers/user-form-container';
 
 class UsersPage extends Component {
   render() {
@@ -13,8 +13,8 @@ class UsersPage extends Component {
         </div>
        <h2>User Administration</h2>
        <Route component={UsersList} exact path="/users"/>
-       <Route component={UserForm} path="/users/new"/>
-       <Route component={UserForm} path="/users/edit/:_id"/>
+       <Route component={UserFormContainer} path="/users/new"/>
+       <Route component={UserFormContainer} path="/users/edit/:_id" />
      </div>
     )
   }

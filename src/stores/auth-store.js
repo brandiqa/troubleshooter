@@ -4,7 +4,6 @@ import { feathersClient, service } from './client';
 
 class AuthStore {
 
-  @observable users = [];
   @observable user = {};
   @observable authPending = true;
   @observable loading = false;
@@ -47,16 +46,6 @@ class AuthStore {
 
   @computed get isAuthenticated() {
     return !_.isEmpty(this.user);
-  }
-
-  @action
-  fetchUsers = () => {
-    this.loading = true;
-    this.errors = {};
-    this.userService.find({})
-      .then(response => this.users = response.data )
-      .catch(err => this.errors = { global : err.message ? err.message : 'Backend server is Unreachable'})
-      .then(() => this.loading = false);
   }
 }
 

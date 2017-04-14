@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Message, Icon, Card } from 'semantic-ui-react';
 import UserCard from './user-card';
-import store from '../stores/auth-store';
+import store from '../stores/users-store';
 
 @observer
 class UsersList extends Component {
