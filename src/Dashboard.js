@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import DevTools from 'mobx-react-devtools';
+import DevTools from 'mobx-react-devtools';
 import { NavLink } from 'react-router-dom';
 import { Sidebar, Segment, Menu, Image, Icon, Button } from 'semantic-ui-react';
 import { Route } from 'react-router-dom';
@@ -13,6 +13,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Sidebar.Pushable as={Segment} style={{height:"100vh"}}>
+          <DevTools/>
           <Sidebar as={Menu} width='thin' vertical visible inverted>
             <Segment basic inverted style={{ height: "80px", marginBottom:0}}>
               <Image src={icon} size="small" centered style={{width:"50px"}}/>
@@ -25,15 +26,16 @@ class Dashboard extends Component {
             </NavLink>
           </Sidebar>
           <Sidebar.Pusher>
-            <Segment basic>
+            <Segment basic style={{width:"92vw"}}>
               <Menu secondary>
                 <Menu.Header><Image src={logo} size="small"/></Menu.Header>
-                <Menu.Item>
-                  <Button basic>Logout</Button>
-                </Menu.Item>
+                <Menu.Menu position="right">
+                  <Menu.Item>
+                    <Button basic>Logout</Button>
+                  </Menu.Item>
+                </Menu.Menu>
               </Menu>
               <hr/>
-              {/* <DevTools/> */}
               <Route component={DashboardPage} exact path="/" />
               <Route component={UsersPage} path="/users" />
             </Segment>
