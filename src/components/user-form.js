@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import MobxReactForm from 'mobx-react-form';
 import validatorjs from 'validatorjs';
-import { Icon, Form, Button, Grid, Message } from 'semantic-ui-react';
+import { Form, Button, Grid } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import InputField from './input-field';
 import store from '../stores/users-store';
@@ -48,8 +48,6 @@ const password = {
 
 class MobxForm extends MobxReactForm {
   onSuccess(form) {
-    // const { _id } = form.values()
-    // console.log(form.values())
     if(store.user._id){
       store.updateUser(form.values())
     }
@@ -89,16 +87,6 @@ class UserForm extends Component {
     const { enablePassword } = this.state;
     const { redirect, loading, errors, user } = store;
 
-    const errorMessage = (
-      <Message icon negative>
-        <Icon name='warning' />
-        <Message.Content>
-           <Message.Header>Something went wrong!</Message.Header>
-           {errors.global}
-       </Message.Content>
-      </Message>
-    );
-
     const userForm = (
       <Form onSubmit={form.onSubmit} loading={loading}>
         <Form.Group widths='equal'>
@@ -117,7 +105,6 @@ class UserForm extends Component {
         <Grid columns={3}>
           <Grid.Column>
             <h3 style={{marginTop:"1em"}}>{ user._id ? 'Edit User' : 'Add New User' }</h3>
-            {errors.global && errorMessage }
             { userForm }
           </Grid.Column>
         </Grid>

@@ -2,6 +2,19 @@ import { observable, action } from 'mobx';
 import _ from 'lodash';
 import { feathersClient, service } from './client';
 
+const decodeFeathersErrors = (err) => {
+  const json = JSON.stringify(err);
+  const errs = JSON.parse(json).errors;
+  const { firstName, lastName, username, email, password } = errs;
+  return {
+    firstName: firstName ? firstName.message: '',
+    lastName: lastName ? lastName.message : '',
+    username: username ? username.message : '',
+    email: email ? email.message : '',
+    password: password ? password.message : ''
+  }
+}
+
 class UserStore {
 
   @observable users = [];
@@ -32,25 +45,21 @@ class UserStore {
         this.users.push(response)
         this.redirect = true;
       })
-      .catch(err => {
-        const json = JSON.stringify(err);
-        this.errors = JSON.parse(json).errors;
-        this.redirect = false;
-      })
+      .catch(err => this.errors = decodeFeathersErrors(err))
       .then(() => {
-          this.loading = false;
+        this.loading = false;
+        this.redirect = false;
       })
   }
 
   @action
   newUser = () => {
-    this.user = {name:{}};
+    this.user = {};
   }
 
   @action
   fetchUser = (_id) => {
     this.loading = true;
-    this.redirect = false;
     this.errors = {}
     this.userService.get(_id)
       .then(response => this.user = response)
@@ -61,19 +70,16 @@ class UserStore {
   @action
   updateUser = (user) => {
     this.loading = true;
+    this.errors = {};
     this.userService.patch(user._id, user)
       .then(response => {
         this.users = this.users.map(item => item._id === user._id ? user : item);
         this.redirect = true;
-        this.errors = {};
       })
-      .catch(err => {
-        const json = JSON.stringify(err);
-        const errs = JSON.parse(json).errors;
-        console.log(json)
-      })
+      .catch(err => this.errors = decodeFeathersErrors(err))
       .then(() => {
         this.loading = false;
+        this.redirect = false;
       })
   }
 
@@ -83,9 +89,7 @@ class UserStore {
       .then(response => {
         this.users = this.users.filter(item => item._id !== _id)
       })
-      .catch(err => {
-        this.errors = {global: "Something went wrong"}
-      })
+      .catch(err =>  this.errors = {global: "Something went wrong"} )
   }
 }
 
