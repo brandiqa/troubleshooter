@@ -10,7 +10,8 @@ import { BrowserRouter} from 'react-router-dom';
 @observer
 class App extends Component {
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     authStore.sessionAuth();
   }
 
