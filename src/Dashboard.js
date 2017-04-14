@@ -26,7 +26,7 @@ class Dashboard extends Component {
             </NavLink>
           </Sidebar>
           <Sidebar.Pusher>
-            <Segment basic style={{width:"92vw"}}>
+            <Segment basic padded style={{width:"92vw"}}>
               <Menu secondary>
                 <Menu.Header><Image src={logo} size="small"/></Menu.Header>
                 <Menu.Menu position="right">

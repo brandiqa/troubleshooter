@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Message, Icon } from 'semantic-ui-react';
+import { Message, Icon, Card } from 'semantic-ui-react';
+import UserCard from './user-card';
 
 @observer
 class UsersList extends Component {
@@ -10,7 +11,7 @@ class UsersList extends Component {
   }
 
   render() {
-    const { users, loading, errors } = this.props.store;
+    const { users, loading, errors, deleteUser } = this.props.store;
 
     const fetchingMessage = (
       <Message icon info>
@@ -32,18 +33,18 @@ class UsersList extends Component {
       </Message>
     )
 
-    const userItems = users.map(user => ( <li key={user._id}>{user.email}</li> ));
-    const usersList = (
-      <ul>
-        {userItems}
-      </ul>
+    const userCardItems = users.map(user => ( <UserCard key={user._id} user={user} deleteUser={deleteUser} /> ));
+    const userCards = (
+      <Card.Group>
+        {userCardItems}
+      </Card.Group>
     )
 
     return (
       <div>
         { loading && fetchingMessage }
         { errors.global && errorMessage }
-        { usersList }
+        { userCards }
       </div>
     )
   }
