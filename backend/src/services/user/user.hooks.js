@@ -17,12 +17,17 @@ const restrict = [
   })
 ];
 
+const restrictToAdmin = restrictToRoles({
+  roles: ['admin'],
+  fieldName: 'role',
+});
+
 module.exports = {
   before: {
     all: [],
     find: [ authenticate('jwt') ],
     get: [ ...restrict ],
-    create: [ local.hooks.hashPassword() ],
+    create: [ local.hooks.hashPassword(), restrictToAdmin ],
     update: [ ...restrict ],
     patch: [ ...restrict ],
     remove: [ ...restrict ]

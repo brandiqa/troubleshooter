@@ -4,10 +4,11 @@ import { feathersClient, service } from './client';
 
 const decodeFeathersErrors = (err) => {
   const json = JSON.stringify(err);
-  const errs = JSON.parse(json).errors;
+  const globalError = JSON.parse(json);
+  const errs = globalError.errors;
   const { firstName, lastName, username, email, password, role } = errs;
   return {
-    global: 'User Validation Failed at Server Level!',
+    global: globalError.message,
     firstName: firstName ? firstName.message: '',
     lastName: lastName ? lastName.message : '',
     username: username ? username.message : '',
