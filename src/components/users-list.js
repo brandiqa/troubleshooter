@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Message, Icon, Card } from 'semantic-ui-react';
+import { Message, Icon, Card, Segment, Modal, Button } from 'semantic-ui-react';
 import UserCard from './user-card';
 import store from '../stores/users-store';
 
@@ -14,7 +14,7 @@ class UsersList extends Component {
   }
 
   render() {
-    const { users, loading, errors, deleteUser } = store;
+    const { users, loading, errors, deleteUser, showErrors, hideErrors } = store;
 
     const fetchingMessage = (
       <Message icon info>
@@ -27,13 +27,33 @@ class UsersList extends Component {
     )
 
     const errorMessage = (
-      <Message icon negative>
-        <Icon name='wait' />
-        <Message.Content>
-           <Message.Header>Server Timeout</Message.Header>
-           {errors.global}
-       </Message.Content>
-      </Message>
+      <Segment basic compact>
+        <Message icon negative compact>
+          <i className="close icon"></i>
+          <Icon name='ban' />
+          <Message.Content>
+             <Message.Header>{errors.action}</Message.Header>
+             {errors.message}
+         </Message.Content>
+        </Message>
+      </Segment>
+    )
+
+    const errorStyles = {
+      backgroundColor: "#FFF6F6",
+      color: '#9f3a38'
+    }
+
+    const errorModal = (
+      <Modal open={showErrors}>
+        <Modal.Header style={errorStyles}><Icon name='ban' />{errors.action}</Modal.Header>
+        <Modal.Content style={errorStyles}>
+          {errors.message}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={() => hideErrors() }>Close</Button>
+        </Modal.Actions>
+      </Modal>
     )
 
     const userCardItems = users.map(user => ( <UserCard key={user._id} user={user} deleteUser={deleteUser} /> ));
@@ -46,7 +66,8 @@ class UsersList extends Component {
     return (
       <div>
         { loading && fetchingMessage }
-        { errors.global && errorMessage }
+        {/* { errors.action && errorMessage } */}
+        { errorModal }
         { userCards }
       </div>
     )

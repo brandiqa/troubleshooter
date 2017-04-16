@@ -24,6 +24,7 @@ class UserStore {
   @observable user = {};
   @observable loading = false;
   @observable errors = {};
+  @observable showErrors = false;
   @observable redirect = false;
 
   client = feathersClient();
@@ -92,7 +93,15 @@ class UserStore {
       .then(response => {
         this.users = this.users.filter(item => item._id !== _id)
       })
-      .catch(err =>  this.errors = {global: "Something went wrong"} )
+      .catch(err =>  {
+        this.errors = {action:'Delete User Denied!', message: err.message}
+        this.showErrors = true;
+      })
+  }
+
+  @action
+  hideErrors = () => {
+    this.showErrors = false;
   }
 }
 
