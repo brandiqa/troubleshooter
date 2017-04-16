@@ -53,7 +53,7 @@ class AuthStore {
 
   @computed get fullName() {
     if(this.user){
-      return this.user.firstName + " " + this.user.lastName
+      return `${this.user.firstName} ${(this.user.lastName || '')}`
     }
     return null;
   }

@@ -22,6 +22,15 @@ const restrictToAdmin = restrictToRoles({
   fieldName: 'role',
 });
 
+const restrictRoleField = () => {
+  return hook => {
+    if(hook.params.user.role !== 'admin') {
+      delete hook.data.role;
+    }
+    return Promise.resolve(hook);
+  };
+};
+
 module.exports = {
   before: {
     all: [],
@@ -29,7 +38,7 @@ module.exports = {
     get: [ ...restrict ],
     create: [ local.hooks.hashPassword(), restrictToAdmin ],
     update: [ ...restrict ],
-    patch: [ ...restrict ],
+    patch: [ ...restrict, restrictRoleField() ],
     remove: [ ...restrict ]
   },
 
