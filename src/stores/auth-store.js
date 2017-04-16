@@ -34,7 +34,10 @@ class AuthStore {
     .then(response => this.client.passport.verifyJWT(response.accessToken))
     .then(data => this.userService.get(data.userId))
     .then(user => this.user = user)
-    .catch(err => this.errors = {global: 'Invalid email/password'})
+    .catch(err => {
+      const message = err.code === 401 ? 'Invalid Email/Password' : err.message
+      this.errors = {global: message}
+    })
     .then(() => this.loading = false);
   }
 

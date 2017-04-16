@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Message, Icon, Card, Segment, Modal, Button } from 'semantic-ui-react';
+import { Message, Icon, Card, Modal, Button } from 'semantic-ui-react';
 import UserCard from './user-card';
 import store from '../stores/users-store';
 
@@ -26,18 +26,18 @@ class UsersList extends Component {
       </Message>
     )
 
-    const errorMessage = (
-      <Segment basic compact>
-        <Message icon negative compact>
-          <i className="close icon"></i>
-          <Icon name='ban' />
-          <Message.Content>
-             <Message.Header>{errors.action}</Message.Header>
-             {errors.message}
-         </Message.Content>
-        </Message>
-      </Segment>
-    )
+    // const errorMessage = (
+    //   <Segment basic compact>
+    //     <Message icon negative compact>
+    //       <i className="close icon"></i>
+    //       <Icon name='ban' />
+    //       <Message.Content>
+    //          <Message.Header>{errors.action}</Message.Header>
+    //          {errors.message}
+    //      </Message.Content>
+    //     </Message>
+    //   </Segment>
+    // )
 
     const errorStyles = {
       backgroundColor: "#FFF6F6",
@@ -66,7 +66,6 @@ class UsersList extends Component {
     return (
       <div>
         { loading && fetchingMessage }
-        {/* { errors.action && errorMessage } */}
         { errorModal }
         { userCards }
       </div>
