@@ -13,6 +13,7 @@ module.exports = function (app) {
     email: { type: mongooseClient.SchemaTypes.Email, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    role: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });

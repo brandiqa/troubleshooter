@@ -3,5 +3,9 @@ h1, h2, h3, p, label {
 }
 
 .error {
-  color: #9f3a38
+  color: #9f3a38;
+}
+
+.card-label {
+  font-weight: 700;
 }

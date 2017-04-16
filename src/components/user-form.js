@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import MobxReactForm from 'mobx-react-form';
 import validatorjs from 'validatorjs';
-import { Form, Button, Grid } from 'semantic-ui-react';
+import { Form, Button, Grid, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import InputField from './input-field';
 import store from '../stores/users-store';
@@ -35,6 +35,13 @@ const editFields = {
     placeholder: 'Email',
     type: 'email',
     rules:'email|string|required'
+  },
+  role: {
+    name: 'role',
+    label: 'Role',
+    placeholder: 'admin|agent|user',
+    type: 'text',
+    rules: 'string|required'
   }
 }
 
@@ -95,8 +102,9 @@ class UserForm extends Component {
         </Form.Group>
         <InputField field={form.$('username')} error={errors.username} />
         <InputField field={form.$('email')} error={errors.email} />
+        <InputField field={form.$('role')} error={errors.role} />
         {enablePassword && <InputField field={form.$('password')} error={errors.password}/>}
-        <Button color="teal" type='submit' disabled={form.isPristine}>Save</Button>
+        <Button color="green" type='submit' disabled={form.isPristine}>Save</Button>
       </Form>
     );
 
@@ -105,6 +113,7 @@ class UserForm extends Component {
         <Grid columns={3}>
           <Grid.Column>
             <h3 style={{marginTop:"1em"}}>{ user._id ? 'Edit User' : 'Add New User' }</h3>
+            {errors.global && <Message negative> {errors.global} </Message>}
             { userForm }
           </Grid.Column>
         </Grid>
