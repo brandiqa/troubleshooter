@@ -2,15 +2,18 @@
 
 const { authenticate } = require('feathers-authentication').hooks;
 const commonHooks = require('feathers-hooks-common');
-const { restrictToOwner } = require('feathers-authentication-hooks');
+const { restrictToRoles } = require('feathers-authentication-hooks');
 const local = require('feathers-authentication-local');
 
 
 const restrict = [
   authenticate('jwt'),
-  restrictToOwner({
+  restrictToRoles({
+    roles: ['admin'],
+    fieldName: 'role',
     idField: '_id',
-    ownerField: '_id'
+    ownerField: '_id',
+    owner: true
   })
 ];
 

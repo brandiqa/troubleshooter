@@ -56,7 +56,7 @@ const password = {
 class MobxForm extends MobxReactForm {
   onSuccess(form) {
     if(store.user._id){
-      store.updateUser(form.values())
+      store.updateUser(store.user._id, form.values())
     }
     else {
       store.createUser(form.values())

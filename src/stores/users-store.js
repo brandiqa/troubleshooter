@@ -70,10 +70,10 @@ class UserStore {
   }
 
   @action
-  updateUser = (user) => {
+  updateUser = (_id, user) => {
     this.loading = true;
     this.errors = {};
-    this.userService.patch(user._id, user)
+    this.userService.patch(_id, user)
       .then(response => {
         this.users = this.users.map(item => item._id === user._id ? user : item);
         this.redirect = true;

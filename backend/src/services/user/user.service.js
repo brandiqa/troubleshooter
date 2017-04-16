@@ -31,7 +31,8 @@ module.exports = function () {
     firstName: 'Admin',
     username: 'admin',
     email: 'admin@example.com',
-    password: 'admin'
+    password: 'admin',
+    role: 'admin'
   };
 
   service.find({})
