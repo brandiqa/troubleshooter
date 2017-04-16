@@ -47,6 +47,13 @@ class AuthStore {
   @computed get isAuthenticated() {
     return !_.isEmpty(this.user);
   }
+
+  @computed get fullName() {
+    if(this.user){
+      return this.user.firstName + " " + this.user.lastName
+    }
+    return null;
+  }
 }
 
 export default new AuthStore();

@@ -31,6 +31,9 @@ class Dashboard extends Component {
                 <Menu.Header><Image src={logo} size="small"/></Menu.Header>
                 <Menu.Menu position="right">
                   <Menu.Item>
+                    Logged in as {authStore.fullName}
+                  </Menu.Item>
+                  <Menu.Item>
                     <Button basic onClick={() => authStore.logout()}>Logout</Button>
                   </Menu.Item>
                 </Menu.Menu>
