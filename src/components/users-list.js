@@ -4,8 +4,6 @@ import { Message, Icon, Card, Modal, Button } from 'semantic-ui-react';
 import UserCard from './user-card';
 import store from '../stores/users-store';
 
-
-
 @observer
 class UsersList extends Component {
 

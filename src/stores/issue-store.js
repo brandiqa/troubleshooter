@@ -85,7 +85,7 @@ class IssueStore {
   }
 
   @action
-  delete = () => {
+  deleteOne = () => {
     this.service.remove(_id)
       .then(response => {
         this.issues = this.issues.filter(item => item._id !== _id)
