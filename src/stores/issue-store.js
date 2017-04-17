@@ -25,7 +25,7 @@ class IssueStore {
   @observable showErrors = false;
   @observable redirect = false;
 
-  service = feathersClient().service('issue');
+  service = feathersClient().service('issues');
 
   @action
   fetchAll = () => {
@@ -85,7 +85,7 @@ class IssueStore {
   }
 
   @action
-  deleteOne = () => {
+  deleteOne = (_id) => {
     this.service.remove(_id)
       .then(response => {
         this.issues = this.issues.filter(item => item._id !== _id)

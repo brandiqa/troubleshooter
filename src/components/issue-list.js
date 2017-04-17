@@ -9,7 +9,7 @@ import store from '../stores/issue-store';
 class IssueList extends Component {
 
   componentDidMount() {
-    store.fetch();
+    store.fetchAll();
   }
 
   render() {

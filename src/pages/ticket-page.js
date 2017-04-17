@@ -15,7 +15,7 @@ class TicketPage extends Component {
           </Menu.Item>
         </Menu>
         <Grid columns={12}>
-          <Grid.Column wide={4}>
+          <Grid.Column>
              <Route component={TicketList} path="/tickets"/>
           </Grid.Column>
           <Grid.Column>

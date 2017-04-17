@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import IssueList from '../components/issues-list';
+import IssueList from '../components/issue-list';
 import IssueFormContainer from '../containers/issue-form-container';
 
 class IssuePage extends Component {

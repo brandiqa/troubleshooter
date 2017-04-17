@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import DashboardPage from './pages/dashboard-page';
 import UsersPage from './pages/users-page';
 import TicketPage from './pages/ticket-page';
+import IssuePage from './pages/issue-page';
 import authStore from './stores/auth-store';
 import logo from './logo-inverted.svg';
 import icon from './icon.svg';
@@ -25,7 +26,10 @@ class Dashboard extends Component {
               <Icon name='users' /> Users
             </NavLink>
             <NavLink className="item" activeClassName="active" exact to="/tickets">
-              <Icon name='users' /> Tickets
+              <Icon name='book' /> Tickets
+            </NavLink>
+            <NavLink className="item" activeClassName="active" exact to="/issues">
+              <Icon name='puzzle' /> My Issues
             </NavLink>
           </Sidebar>
           <Sidebar.Pusher>
@@ -45,6 +49,7 @@ class Dashboard extends Component {
               <Route component={DashboardPage} exact path="/" />
               <Route component={UsersPage} path="/users" />
               <Route component={TicketPage} path="/tickets" />
+              <Route component={IssuePage} path="/issues" />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

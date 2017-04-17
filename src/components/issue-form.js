@@ -32,7 +32,7 @@ const fields = {
     rules: 'string|required'
   },
   urgency: {
-    name: 'urgency'
+    name: 'urgency',
     label: 'urgency',
     placeholder: 'urgency',
     type: 'text',
@@ -59,7 +59,6 @@ class IssueForm extends Component {
     form = null;
 
     componentWillMount() {
-      let fields = null;
       const plugins = { dvr: validatorjs };
       this.form = new MobxForm({fields},{plugins});
     }
