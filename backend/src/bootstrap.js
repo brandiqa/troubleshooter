@@ -27,21 +27,7 @@ module.exports = function() {
     .then(function(response) {
       if(response.data.length === 0) {
         categoryService.create([
-          {
-            type: 'General'
-          },
-          {
-            type: 'Hardware'
-          },
-          {
-            type: 'Software'
-          },
-          {
-            type: 'Network'
-          },
-          {
-            type: 'Printer'
-          }
+          { type: 'Hardware' }, { type: 'Software' }, { type: 'Internet'}, { type: 'Network' }, { type: 'Printer' }, { type: 'Other'}
         ])
         .then(function(){
           console.info('Default Categories Created...'); // eslint-disable-line no-console
