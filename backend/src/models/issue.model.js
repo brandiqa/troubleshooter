@@ -13,6 +13,7 @@ module.exports = function (app) {
     urgency: { type: String, required: true, default: 'low' },
     status: { type: String, required: true, default: 'new' },
     postedBy: { type: mongooseClient.Schema.ObjectId, ref:'user', required: true },
+    ticket: {type: mongooseClient.Schema.ObjectId, ref:'ticket', required: false},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
