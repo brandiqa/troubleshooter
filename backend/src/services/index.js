@@ -10,6 +10,8 @@ const issue = require('./issue/issue.service.js');
 
 const comment = require('./comment/comment.service.js');
 
+const ticketlog = require('./ticketlog/ticketlog.service.js');
+
 module.exports = function () {
   const app = this; // eslint-disable-line no-unused-vars
   app.configure(user);
@@ -17,4 +19,5 @@ module.exports = function () {
   app.configure(ticket);
   app.configure(issue);
   app.configure(comment);
+  app.configure(ticketlog);
 };
