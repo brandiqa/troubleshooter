@@ -93,17 +93,22 @@ class UserForm extends Component {
     const form = this.form;
     const { enablePassword } = this.state;
     const { redirect, loading, errors, user } = store;
+    const messages = errors.messages ? errors.messages.toJS() : [];
+
+    const errorMessages = (
+      <Message negative header={errors.global} list={messages.reverse()}/>
+    )
 
     const userForm = (
       <Form onSubmit={form.onSubmit} loading={loading}>
         <Form.Group widths='equal'>
-          <InputField field={form.$('firstName')} error={errors.firstName} />
-          <InputField field={form.$('lastName')} error={errors.lastName}/>
+          <InputField field={form.$('firstName')} />
+          <InputField field={form.$('lastName')}/>
         </Form.Group>
-        <InputField field={form.$('username')} error={errors.username} />
-        <InputField field={form.$('email')} error={errors.email} />
-        <InputField field={form.$('role')} error={errors.role} />
-        {enablePassword && <InputField field={form.$('password')} error={errors.password}/>}
+        <InputField field={form.$('username')} />
+        <InputField field={form.$('email')} />
+        <InputField field={form.$('role')} />
+        {enablePassword && <InputField field={form.$('password')}/>}
         <Button color="green" type='submit' disabled={form.isPristine}>Save</Button>
       </Form>
     );
@@ -113,7 +118,7 @@ class UserForm extends Component {
         <Grid columns={3}>
           <Grid.Column>
             <h3 style={{marginTop:"1em"}}>{ user._id ? 'Edit User' : 'Add New User' }</h3>
-            {errors.global && <Message negative> {errors.global} </Message>}
+            { errors.global && errorMessages}
             { userForm }
           </Grid.Column>
         </Grid>

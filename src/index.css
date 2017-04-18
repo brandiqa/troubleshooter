@@ -6,6 +6,10 @@ h1, h2, h3, p, label {
   color: #9f3a38;
 }
 
+.header {
+  text-transform: capitalize;
+}
+
 .card-label {
   font-weight: 700;
 }

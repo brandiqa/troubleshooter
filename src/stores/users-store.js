@@ -2,22 +2,6 @@ import { observable, action } from 'mobx';
 import _ from 'lodash';
 import { feathersClient, service } from './client';
 
-const decodeFeathersErrors = (err) => {
-  const json = JSON.stringify(err);
-  const globalError = JSON.parse(json);
-  const errs = globalError.errors;
-  const { firstName, lastName, username, email, password, role } = errs;
-  return {
-    global: globalError.message,
-    firstName: firstName ? firstName.message: '',
-    lastName: lastName ? lastName.message : '',
-    username: username ? username.message : '',
-    email: email ? email.message : '',
-    password: password ? password.message : '',
-    role: role ? role.message : ''
-  }
-}
-
 class UserStore {
 
   @observable users = [];
@@ -30,13 +14,25 @@ class UserStore {
   client = feathersClient();
   userService = service('user');
 
+  handleFeathersError = (err) => {
+    if( err.code === 400) {
+      let messages = [];
+      _.each(err.errors, (value, key) => {
+        messages.push(value.message);
+      })
+      this.errors = {global: err.message, messages}
+    } else {
+      this.errors = {global: err.message}
+    }
+  }
+
   @action
   fetchUsers = () => {
     this.loading = true;
     this.errors = {};
     this.userService.find({})
       .then(response => this.users = response.data )
-      .catch(err => this.errors = { global : err.message ? err.message : 'Backend server is Unreachable'})
+      .catch(err => this.handleFeathersError(err))
       .then(() => this.loading = false);
   }
 
@@ -49,7 +45,7 @@ class UserStore {
         this.users.push(response)
         this.redirect = true;
       })
-      .catch(err => this.errors = decodeFeathersErrors(err))
+      .catch(err => this.handleFeathersError(err))
       .then(() => {
         this.loading = false;
         this.redirect = false;
@@ -67,7 +63,7 @@ class UserStore {
     this.errors = {}
     this.userService.get(_id)
       .then(response => this.user = response)
-      .catch(err => this.errors = {global: err.message})
+      .catch(err => this.handleFeathersError(err))
       .then(() => this.loading = false)
   }
 
@@ -80,7 +76,7 @@ class UserStore {
         this.users = this.users.map(item => item._id === user._id ? user : item);
         this.redirect = true;
       })
-      .catch(err => this.errors = decodeFeathersErrors(err))
+      .catch(err => this.handleFeathersError(err))
       .then(() => {
         this.loading = false;
         this.redirect = false;
