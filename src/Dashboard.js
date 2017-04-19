@@ -19,16 +19,16 @@ class Dashboard extends Component {
             <Segment basic inverted style={{ height: "80px", marginBottom:0}}>
               <Image src={icon} size="small" centered style={{width:"50px"}}/>
             </Segment>
-            <NavLink className="item" activeClassName="active" exact to="/">
+            <NavLink className="item teal" activeClassName="active" exact to="/">
               <Icon name='home' /> Dashboard
             </NavLink>
-            <NavLink className="item" activeClassName="active" exact to="/users">
+            <NavLink className="item teal" activeClassName="active" exact to="/users">
               <Icon name='users' /> Users
             </NavLink>
-            <NavLink className="item" activeClassName="active" exact to="/tickets">
+            <NavLink className="item teal" activeClassName="active" exact to="/tickets">
               <Icon name='book' /> Tickets
             </NavLink>
-            <NavLink className="item" activeClassName="active" exact to="/issues">
+            <NavLink className="item teal" activeClassName="active" exact to="/issues">
               <Icon name='puzzle' /> My Issues
             </NavLink>
           </Sidebar>

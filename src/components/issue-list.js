@@ -43,7 +43,7 @@ class IssueList extends Component {
         <Message.Content>
            <Message.Header>You haven't reported any issues</Message.Header>
            <p>If you are facing an IT problem, please make a report here.</p>
-           <Link to={'/contacts/new'} className="ui button primary">Report an Issue</Link>
+           <Link to={'/issues/new'} className="ui button teal">Report an Issue</Link>
        </Message.Content>
       </Message>
     )

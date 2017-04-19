@@ -1,85 +1,33 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import MobxReactForm from 'mobx-react-form';
-import validatorjs from 'validatorjs';
+// import MobxReactForm from 'mobx-react-form';
+// import validatorjs from 'validatorjs';
 import { Form, Button, Grid, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import InputField from './input-field';
-import Store from '../stores/store';
-import { user } from '../stores/auth-store';
+// import Store from '../stores/store';
+// import { user } from '../stores/auth-store';
 
-const store = new Store('issues');
-
-const fields = {
-  category: {
-    name:'category',
-    label: 'Category',
-    placeholder: 'Choose Category',
-    type: 'select',
-    values: ['Hardware', 'Software'],
-    rules: 'string|required'
-  },
-  subject: {
-    name: 'subject',
-    label: 'Subject',
-    placeholder: 'Subject',
-    type: 'text',
-    rules: 'string|required'
-  },
-  content: {
-    name: 'content',
-    label: 'Content',
-    placeholder: 'Describe the issue',
-    type: 'text',
-    rules: 'string|required'
-  },
-  urgency: {
-    name: 'urgency',
-    label: 'urgency',
-    placeholder: 'urgency',
-    type: 'text',
-    rules: 'string|required'
-  }
-}
-
-class MobxForm extends MobxReactForm {
-  onSuccess(form) {
-    if(store.entity._id){
-      store.update(store.entity._id, form.values())
-    }
-    else {
-      const issue = Object.assign(form.values(),{postedBy:user})
-      store.create(issue)
-    }
-  }
-}
+// const store = new Store('issues');
 
 @observer
 class IssueForm extends Component {
 
-    form = null;
-
-    componentWillMount() {
-      const plugins = { dvr: validatorjs };
-      this.form = new MobxForm({fields},{plugins});
-    }
-
-
     componentWillReceiveProps = (nextProps) => {
       const issue = nextProps.issue;
-      this.form.update(issue);
+      this.props.form.update(issue);
     }
 
     render() {
-      const form = this.form;
-      const { redirect, loading, errors, entity:issue } = store;
+      const {form} = this.props;
+      const { redirect, loading, errors, entity:issue } = this.props.store;
 
       const issueForm = (
         <Form onSubmit={form.onSubmit} loading={loading}>
-          <InputField field={form.$('category')} error={errors.category} />
-          <InputField field={form.$('subject')} error={errors.subject}/>
-          <InputField field={form.$('content')} error={errors.content} />
-          <InputField field={form.$('urgency')} error={errors.urgency} />
+          <InputField field={form.$('category')}  />
+          <InputField field={form.$('subject')} />
+          <InputField field={form.$('content')}  />
+          <InputField field={form.$('urgency')}  />
           <Button color="green" type='submit' disabled={form.isPristine}>Report Issue</Button>
         </Form>
       );
@@ -88,7 +36,7 @@ class IssueForm extends Component {
         <div>
           <Grid columns={3}>
             <Grid.Column>
-              <h3 style={{marginTop:"1em"}}>{ issue._id ? 'Edit Issue' : 'Report New Issue' }</h3>
+              <h3 style={{marginTop:"1em"}}>{ issue._id ? 'Update an Issue' : 'Report an Issue' }</h3>
               {errors.global && <Message negative> {errors.global} </Message>}
               { issueForm }
             </Grid.Column>
