@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Message, Icon, Card } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import IssueCard from './issue-card';
 import Store from '../stores/store';
-
 
 @observer
 class IssueList extends Component {
@@ -37,7 +37,19 @@ class IssueList extends Component {
       </Message>
     )
 
+    const emptyMessage = (
+      <Message icon info>
+        <Icon name='warning circle' />
+        <Message.Content>
+           <Message.Header>You haven't reported any issues</Message.Header>
+           <p>If you are facing an IT problem, please make a report here.</p>
+           <Link to={'/contacts/new'} className="ui button primary">Report an Issue</Link>
+       </Message.Content>
+      </Message>
+    )
+
     const issueCardItems = issues.map(issue => ( <IssueCard key={issue._id} issue={issue} deleteIssue={deleteOne} /> ));
+
     const issueCards = (
       <Card.Group>
         {issueCardItems}
@@ -48,6 +60,7 @@ class IssueList extends Component {
       <div>
         <h3>List of Issues</h3>
         { loading && fetchingMessage }
+        { issues.length === 0 && !loading  && !errors.global && emptyMessage }
         { errors.global && errorMessages}
         { issueCards }
       </div>
