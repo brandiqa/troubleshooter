@@ -20,6 +20,15 @@ class IssueCard extends Component {
 
   render() {
     const { issue } = this.props;
+    const color = () => {
+      if(issue.urgency === 'high') {
+        return 'red';
+      } else if( issue.urgency === 'medium') {
+        return 'yellow';
+      } else {
+        return 'teal';
+      }
+    }
 
     const modal = (
       <Modal open={this.state.modalOpen}>
@@ -37,7 +46,7 @@ class IssueCard extends Component {
     )
 
     const card = (
-      <Card>
+      <Card color={color()}>
         <Card.Content>
           <Card.Header>
             <Icon name='book'/> {issue.subject}
