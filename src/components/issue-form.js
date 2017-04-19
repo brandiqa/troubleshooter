@@ -22,7 +22,7 @@ class IssueForm extends Component {
           <SelectField field={form.$('category')}  />
           <InputField field={form.$('subject')} />
           <InputField field={form.$('content')}  />
-          <InputField field={form.$('urgency')}  />
+          <SelectField field={form.$('urgency')}  />
           <Button color="green" type='submit' disabled={form.isPristine}>Submit Issue</Button>
         </Form>
       );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Form, Select } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import classnames from 'classnames';
 
 export default observer(({field}) => (
@@ -8,7 +8,9 @@ export default observer(({field}) => (
     <label htmlFor={field.id}>
       {field.label}
     </label>
-     <Select options={field.options} {...field.bind()}/>
+    <select {...field.bind()}>
+      {field.options.map(option => (<option key={option.key} value={option.value}>{option.text}</option>) )}
+    </select>
     <span className="error">{field.error}</span>
   </Form.Field>
 ));

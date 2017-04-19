@@ -13,6 +13,12 @@ const categoryOptions = [
   { key: 'software', text: 'Software', value:'software'}
 ]
 
+const priorityOptions = [
+  { key: 'low', text: 'Low', value:'low'},
+  { key: 'medium', text: 'Medium', value:'medium'},
+  { key: 'high', text: 'High', value:'high'}
+]
+
 const fields = {
   category: {
     name:'category',
@@ -38,9 +44,10 @@ const fields = {
   },
   urgency: {
     name: 'urgency',
-    label: 'Urgency',
-    placeholder: 'Urgency',
-    type: 'text',
+    label: 'Priority',
+    placeholder: 'Priority',
+    type: 'select',
+    options: priorityOptions,
     rules: 'string|required'
   }
 }
