@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import IssueForm from '../components/issue-form';
-import store from '../stores/issue-store';
+import Store from '../stores/store';
 
 @observer
 class IssueFormContainer extends Component {
 
+  store = null;
+
+  constructor(props) {
+    super(props)
+    this.store = new Store('issues');
+  }
+
   componentDidMount() {
     const { _id } = this.props.match.params;
     if(_id){
-      store.fetch(_id)
+      this.store.fetch(_id)
     } else {
-      store.new();
+      this.store.newEntity();
     }
   }
 
@@ -19,7 +26,7 @@ class IssueFormContainer extends Component {
     const { _id } = this.props.match.params;
     return (
       <div>
-        <IssueForm issue={store.issue} _id={_id}/>
+        <IssueForm store={this.store} issue={this.store.entity} _id={_id}/>
       </div>
     )
   }

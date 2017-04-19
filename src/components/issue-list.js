@@ -46,6 +46,7 @@ class IssueList extends Component {
 
     return (
       <div>
+        <h3>List of Issues</h3>
         { loading && fetchingMessage }
         { errors.global && errorMessages}
         { issueCards }

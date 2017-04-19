@@ -11,7 +11,6 @@ class IssuePage extends Component {
           <NavLink className="item" activeClassName="active" exact to="/issues">List Issues</NavLink>
           <NavLink className="item" activeClassName="active" exact to="/issues/new">Report Issue</NavLink>
         </div>
-       <h2>My Issues</h2>
        <Route component={IssueList} exact path="/issues"/>
        <Route component={IssueFormContainer} path="/issues/new"/>
        <Route component={IssueFormContainer} path="/issues/edit/:_id" />

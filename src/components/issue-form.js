@@ -5,8 +5,10 @@ import validatorjs from 'validatorjs';
 import { Form, Button, Grid, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import InputField from './input-field';
-import store from '../stores/issue-store';
+import Store from '../stores/store';
 import { user } from '../stores/auth-store';
+
+const store = new Store('issues');
 
 const fields = {
   category: {
@@ -40,11 +42,10 @@ const fields = {
   }
 }
 
-
 class MobxForm extends MobxReactForm {
   onSuccess(form) {
-    if(store.issue._id){
-      store.update(store.issue._id, form.values())
+    if(store.entity._id){
+      store.update(store.entity._id, form.values())
     }
     else {
       const issue = Object.assign(form.values(),{postedBy:user})
@@ -71,7 +72,7 @@ class IssueForm extends Component {
 
     render() {
       const form = this.form;
-      const { redirect, loading, errors, issue } = store;
+      const { redirect, loading, errors, entity:issue } = store;
 
       const issueForm = (
         <Form onSubmit={form.onSubmit} loading={loading}>
