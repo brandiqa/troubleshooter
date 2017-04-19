@@ -5,19 +5,9 @@ import validatorjs from 'validatorjs';
 import IssueForm from '../components/issue-form';
 import { user } from '../stores/auth-store';
 import Store from '../stores/store';
+import { categoryOptions, priorityOptions } from '../config/options';
 
 const store = new Store('issues');
-
-const categoryOptions = [
-  { key: 'hardware', text: 'Hardware', value:'hardware'},
-  { key: 'software', text: 'Software', value:'software'}
-]
-
-const priorityOptions = [
-  { key: 'low', text: 'Low', value:'low'},
-  { key: 'medium', text: 'Medium', value:'medium'},
-  { key: 'high', text: 'High', value:'high'}
-]
 
 const fields = {
   category: {

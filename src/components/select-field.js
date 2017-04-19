@@ -9,7 +9,7 @@ export default observer(({field}) => (
       {field.label}
     </label>
     <select {...field.bind()}>
-      {field.options.map(option => (<option key={option.key} value={option.value}>{option.text}</option>) )}
+      {field.options.map(option => (<option key={option.toLowerCase()} value={option.toLowerCase()}>{option}</option>) )}
     </select>
     <span className="error">{field.error}</span>
   </Form.Field>
