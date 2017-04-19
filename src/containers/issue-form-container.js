@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import MobxReactForm from 'mobx-react-form';
 import validatorjs from 'validatorjs';
 import IssueForm from '../components/issue-form';
-import { user } from '../stores/auth-store';
+import authStore from '../stores/auth-store';
 import Store from '../stores/store';
 import { categoryOptions, priorityOptions } from '../config/options';
 
@@ -29,13 +29,14 @@ const fields = {
     name: 'content',
     label: 'Content',
     placeholder: 'Describe the issue',
-    type: 'text',
+    type: 'textarea',
+    rows: 3,
     rules: 'string|required'
   },
   urgency: {
     name: 'urgency',
     label: 'Priority',
-    placeholder: 'Priority',
+    placeholder: 'Choose a Priority level',
     type: 'select',
     options: priorityOptions,
     rules: 'string|required'
@@ -48,7 +49,7 @@ class Form extends MobxReactForm {
       store.update(store.entity._id, form.values())
     }
     else {
-      const issue = Object.assign(form.values(),{postedBy:user})
+      const issue = Object.assign(form.values(),{postedBy:authStore.user})
       store.create(issue)
     }
   }

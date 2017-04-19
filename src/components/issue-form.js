@@ -4,6 +4,7 @@ import { Form, Button, Grid, Message } from 'semantic-ui-react';
 import { Redirect } from 'react-router';
 import InputField from './input-field';
 import SelectField from './select-field';
+import TextAreaField from './textarea-field';
 
 @observer
 class IssueForm extends Component {
@@ -16,12 +17,17 @@ class IssueForm extends Component {
     render() {
       const { form } = this.props;
       const { redirect, loading, errors, entity:issue } = this.props.store;
+      const messages = errors.messages ? errors.messages.toJS() : [];
+
+      const errorMessages = (
+        <Message negative header={errors.global} list={messages.reverse()}/>
+      )
 
       const issueForm = (
         <Form onSubmit={form.onSubmit} loading={loading}>
           <SelectField field={form.$('category')}  />
           <InputField field={form.$('subject')} />
-          <InputField field={form.$('content')}  />
+          <TextAreaField field={form.$('content')}  />
           <SelectField field={form.$('urgency')}  />
           <Button color="green" type='submit' disabled={form.isPristine}>Submit Issue</Button>
         </Form>
@@ -32,7 +38,7 @@ class IssueForm extends Component {
           <Grid columns={3}>
             <Grid.Column>
               <h3 style={{marginTop:"1em"}}>{ issue._id ? 'Update an Issue' : 'Report an Issue' }</h3>
-              {errors.global && <Message negative> {errors.global} </Message>}
+              { errors.global && errorMessages}
               { issueForm }
             </Grid.Column>
           </Grid>

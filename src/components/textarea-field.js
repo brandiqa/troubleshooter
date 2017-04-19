@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Form } from 'semantic-ui-react';
+import { Form, TextArea } from 'semantic-ui-react';
 import classnames from 'classnames';
 
 export default observer(({field}) => (
@@ -8,10 +8,8 @@ export default observer(({field}) => (
     <label htmlFor={field.id}>
       {field.label}
     </label>
-    <select {...field.bind()}>
-      <option value="">{field.placeholder}</option>
-      {field.options.map(option => (<option key={option.toLowerCase()} value={option.toLowerCase()}>{option}</option>) )}
-    </select>
+    <TextArea autoHeight {...field.bind()}/>
+    {/* <textara {...field.bind()} /> */}
     <span className="error">{field.error}</span>
   </Form.Field>
 ));
