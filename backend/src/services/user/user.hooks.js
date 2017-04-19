@@ -5,7 +5,6 @@ const commonHooks = require('feathers-hooks-common');
 const { restrictToRoles } = require('feathers-authentication-hooks');
 const local = require('feathers-authentication-local');
 
-
 const restrict = [
   authenticate('jwt'),
   restrictToRoles({

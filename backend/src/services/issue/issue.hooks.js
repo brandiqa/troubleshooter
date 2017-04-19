@@ -1,28 +1,36 @@
 'use strict';
 
 const { authenticate } = require('feathers-authentication').hooks;
-const { restrictToRoles } = require('feathers-authentication-hooks');
+const  { restrictToRoles } = require('feathers-authentication-hooks');
+const hooks = require('feathers-authentication-hooks');
+const { iffElse } = require('feathers-hooks-common');
 
-const restrict = [
-  authenticate('jwt'),
+
+const restrictAdminOrAgent = [
   restrictToRoles({
     roles: ['admin','agent'],
-    fieldName: 'role',
-    idField: '_id',
-    ownerField: 'postedBy',
-    owner: true
+    fieldName: 'role'
   })
 ];
+
+const restrictOwner = [
+  hooks.restrictToOwner({
+    idField: '_id', ownerField: 'postedBy'
+  })
+];
+
 
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
-    find: [],
-    get: [...restrict],
+    find: iffElse(hook => hook.params.user.role === 'user',
+    [...restrictOwner],
+    [...restrictAdminOrAgent]),
+    get: [...restrictOwner],
     create: [],
-    update: [],
-    patch: [],
-    remove: []
+    update: [...restrictOwner],
+    patch: [...restrictOwner],
+    remove: [...restrictOwner]
   },
 
   after: {
