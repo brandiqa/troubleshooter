@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Message, Icon, Card, Modal, Button } from 'semantic-ui-react';
+import { Message, Icon, Card } from 'semantic-ui-react';
 import IssueCard from './issue-card';
-import store from '../stores/issue-store';
+import Store from '../stores/store';
 
 
 @observer
 class IssueList extends Component {
 
+  store = null;
+
+  constructor(props) {
+    super(props);
+    this.store = new Store('issues');
+  }
+
   componentDidMount() {
-    store.fetchAll();
+    this.store.fetchAll();
   }
 
   render() {
-    const { issues, loading, errors, deleteOne, showErrors, hideErrors } = store;
+    const { entities:issues, loading, errors, deleteOne } = this.store;
+    const messages = errors.messages ? errors.messages.toJS() : [];
+
+    const errorMessages = (
+      <Message negative header={errors.global} list={messages.reverse()}/>
+    )
 
     const fetchingMessage = (
       <Message icon info>
@@ -23,23 +35,6 @@ class IssueList extends Component {
            We are fetching that content for you.
        </Message.Content>
       </Message>
-    )
-
-    const errorStyles = {
-      backgroundColor: "#FFF6F6",
-      color: '#9f3a38'
-    }
-
-    const errorModal = (
-      <Modal open={showErrors}>
-        <Modal.Header style={errorStyles}><Icon name='ban' />{errors.action}</Modal.Header>
-        <Modal.Content style={errorStyles}>
-          {errors.message}
-        </Modal.Content>
-        <Modal.Actions>
-          <Button onClick={() => hideErrors() }>Close</Button>
-        </Modal.Actions>
-      </Modal>
     )
 
     const issueCardItems = issues.map(issue => ( <IssueCard key={issue._id} issue={issue} deleteIssue={deleteOne} /> ));
@@ -52,7 +47,7 @@ class IssueList extends Component {
     return (
       <div>
         { loading && fetchingMessage }
-        { errorModal }
+        { errors.global && errorMessages}
         { issueCards }
       </div>
     )

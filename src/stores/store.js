@@ -4,7 +4,7 @@ import { feathersClient } from './client';
 
 class Store {
 
-  let service = null;
+  service = null;
 
   constructor(serviceName) {
     this.service = feathersClient().service(serviceName);
@@ -29,7 +29,7 @@ class Store {
   }
 
   @action
-  fetchEntities = () => {
+  fetchAll = () => {
     this.loading = true;
     this.errors = {};
     this.service.find({})
@@ -39,7 +39,7 @@ class Store {
   }
 
   @action
-  createEntity = (entity) => {
+  create = (entity) => {
     this.loading = true;
     this.errors = {};
     this.service.create(entity)
@@ -61,7 +61,7 @@ class Store {
   }
 
   @action
-  fetchEntity = (_id) => {
+  fetch = (_id) => {
     this.loading = true;
     this.errors = {}
     this.service.get(_id)
@@ -71,7 +71,7 @@ class Store {
   }
 
   @action
-  updateEntity = (_id, entity) => {
+  update = (_id, entity) => {
     this.loading = true;
     this.errors = {};
     this.service.patch(_id, entity)
@@ -87,7 +87,7 @@ class Store {
   }
 
   @action
-  deleteEntity = (_id) => {
+  deleteOne = (_id) => {
     this.service.remove(_id)
       .then(response => {
         this.entities = this.entities.filter(item => item._id !== _id)
