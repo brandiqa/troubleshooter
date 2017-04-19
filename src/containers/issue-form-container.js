@@ -8,13 +8,18 @@ import Store from '../stores/store';
 
 const store = new Store('issues');
 
+const categoryOptions = [
+  { key: 'hardware', text: 'Hardware', value:'hardware'},
+  { key: 'software', text: 'Software', value:'software'}
+]
+
 const fields = {
   category: {
     name:'category',
     label: 'Category',
     placeholder: 'Choose Category',
     type: 'select',
-    values: ['Hardware', 'Software'],
+    options: categoryOptions,
     rules: 'string|required'
   },
   subject: {
@@ -33,8 +38,8 @@ const fields = {
   },
   urgency: {
     name: 'urgency',
-    label: 'urgency',
-    placeholder: 'urgency',
+    label: 'Urgency',
+    placeholder: 'Urgency',
     type: 'text',
     rules: 'string|required'
   }
