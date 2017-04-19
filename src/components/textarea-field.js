@@ -9,7 +9,6 @@ export default observer(({field}) => (
       {field.label}
     </label>
     <TextArea autoHeight {...field.bind()}/>
-    {/* <textara {...field.bind()} /> */}
     <span className="error">{field.error}</span>
   </Form.Field>
 ));
