@@ -12,8 +12,8 @@ module.exports = function (app) {
     content: { type: String, required: true },
     urgency: { type: String, required: true, default: 'low' },
     status: { type: String, required: true, default: 'new' },
-    postedBy: { type: mongooseClient.Schema.ObjectId, ref:'user', required: true },
-    ticket: {type: mongooseClient.Schema.ObjectId, ref:'ticket', required: false},
+    postedBy: { type: mongooseClient.Schema.Types.ObjectId, ref:'user', required: true },
+    ticket: {type: mongooseClient.Schema.Types.ObjectId, ref:'ticket', required: false},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });

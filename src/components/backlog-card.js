@@ -6,6 +6,12 @@ import moment from 'moment';
 
 class BacklogCard extends Component {
 
+  handleNewTicket = () => {
+    const { issue, user, createTicket } =  this.props;
+    const values = { issues: [issue], assignedTo: user };
+    createTicket(values);
+  }
+
   render() {
     const { issue } = this.props;
     const color = () => {
@@ -17,6 +23,7 @@ class BacklogCard extends Component {
         return 'teal';
       }
     }
+
     const card = (
       <Card color={color()}>
         <Card.Content>
@@ -28,12 +35,12 @@ class BacklogCard extends Component {
             <p><Icon name='desktop'/><span className="card-label">Category</span> : {_.capitalize(issue.category)}</p>
             <p><Icon name='alarm'/><span className="card-label">Urgency</span> :  {_.capitalize(issue.urgency)}</p>
             <p><Icon name='circle outline'/><span className="card-label">Status</span> :  {_.capitalize(issue.status)}</p>
-            <p><Icon name='user'/><span className="card-label">Posted By</span> :  {issue.user.username}</p>
+            <p><Icon name='user'/><span className="card-label">Posted By</span> :  {issue.user.email}</p>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">
-            <Button color="green">New Ticket</Button>
+            <Button color="green" onClick={this.handleNewTicket}>New Ticket</Button>
             <Button color="teal">Assign Ticket</Button>
           </div>
         </Card.Content>
