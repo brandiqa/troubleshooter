@@ -6,6 +6,7 @@ import DashboardPage from './pages/dashboard-page';
 import UsersPage from './pages/users-page';
 import TicketPage from './pages/ticket-page';
 import IssuePage from './pages/issue-page';
+import BacklogPage from './pages/backlog-page';
 import authStore from './stores/auth-store';
 import logo from './logo-inverted.svg';
 import icon from './icon.svg';
@@ -31,6 +32,9 @@ class Dashboard extends Component {
             <NavLink className="item teal" activeClassName="active" exact to="/issues">
               <Icon name='puzzle' /> My Issues
             </NavLink>
+            <NavLink className="item teal" activeClassName="active" exact to="/backlog">
+              <Icon name='tasks' /> Backlog
+            </NavLink>
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic padded style={{width:"92vw"}}>
@@ -50,6 +54,7 @@ class Dashboard extends Component {
               <Route component={UsersPage} path="/users" />
               <Route component={TicketPage} path="/tickets" />
               <Route component={IssuePage} path="/issues" />
+              <Route component={BacklogPage} path="/backlog" />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
