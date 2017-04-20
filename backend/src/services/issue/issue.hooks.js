@@ -19,7 +19,6 @@ const restrictOwner = [
   })
 ];
 
-
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],

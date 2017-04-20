@@ -4,6 +4,11 @@ const { authenticate } = require('feathers-authentication').hooks;
 const commonHooks = require('feathers-hooks-common');
 const { restrictToRoles } = require('feathers-authentication-hooks');
 const local = require('feathers-authentication-local');
+const hooks = require('feathers-authentication-hooks');
+const { iff, iffElse } = require('feathers-hooks-common');
+
+const isAuthenticated = () => hook => hook.params.user != null;
+const isAdmin = () => hook => hook.params.user.role === 'admin';
 
 const restrict = [
   authenticate('jwt'),
@@ -16,9 +21,13 @@ const restrict = [
   })
 ];
 
-const restrictToAdmin = restrictToRoles({
+const restrictAdmin = restrictToRoles({
   roles: ['admin'],
   fieldName: 'role',
+});
+
+const restrictOwner = hooks.restrictToOwner({
+  idField: '_id', ownerField: '_id'
 });
 
 const restrictRoleField = () => {
@@ -30,12 +39,18 @@ const restrictRoleField = () => {
   };
 };
 
+const restrictAdminOrOwner = iff(isAuthenticated(),
+  iffElse(isAdmin(),
+    [restrictAdmin],
+    [restrictOwner])
+);
+
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt') ],
+    find: [restrictAdminOrOwner],
     get: [ ...restrict ],
-    create: [ local.hooks.hashPassword(), restrictToAdmin ],
+    create: [ local.hooks.hashPassword(), restrictAdmin ],
     update: [ ...restrict ],
     patch: [ ...restrict, restrictRoleField() ],
     remove: [ ...restrict ]
