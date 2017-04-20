@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import BacklogList from '../components/backlog-list';
 
 class BacklogPage extends Component {
   render() {
     return (
-      <h2>Manage Backlog</h2>
+      <div>
+        <h2>Backlog Manager</h2>
+        <BacklogList/>
+      </div>
     )
   }
 }
