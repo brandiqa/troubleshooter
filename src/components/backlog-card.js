@@ -27,6 +27,8 @@ class BacklogCard extends Component {
             <p><Icon name='calendar'/><span className="card-label">Posted on</span> : {moment(issue.createdAt).format('DD-MM-YYYY h:mm a')}</p>
             <p><Icon name='desktop'/><span className="card-label">Category</span> : {_.capitalize(issue.category)}</p>
             <p><Icon name='alarm'/><span className="card-label">Urgency</span> :  {_.capitalize(issue.urgency)}</p>
+            <p><Icon name='circle outline'/><span className="card-label">Status</span> :  {_.capitalize(issue.status)}</p>
+            <p><Icon name='user'/><span className="card-label">Posted By</span> :  {issue.user.username}</p>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>

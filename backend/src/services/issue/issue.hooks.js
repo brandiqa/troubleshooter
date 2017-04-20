@@ -4,9 +4,11 @@ const { authenticate } = require('feathers-authentication').hooks;
 const  { restrictToRoles } = require('feathers-authentication-hooks');
 const hooks = require('feathers-authentication-hooks');
 const { iffElse } = require('feathers-hooks-common');
+const { populate } = require('feathers-hooks-common');
 
+const isUser = () => hook => hook.params.user.role === 'user';
 
-const restrictAdminOrAgent = [
+const restrictAgent = [
   restrictToRoles({
     roles: ['admin','agent'],
     fieldName: 'role'
@@ -19,12 +21,28 @@ const restrictOwner = [
   })
 ];
 
+const restrictOwnerAgent = iffElse(isUser(),
+  [...restrictOwner],
+  [...restrictAgent]
+);
+
+const postedBySchema = {
+  include: {
+    service: 'user',
+    nameAs: 'user',
+    parentField: 'postedBy',
+    childField:'_id'
+  }
+};
+
+const populateUser = [
+  populate({ schema:postedBySchema })
+];
+
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
-    find: iffElse(hook => hook.params.user.role === 'user',
-    [...restrictOwner],
-    [...restrictAdminOrAgent]),
+    find: [restrictOwnerAgent],
     get: [...restrictOwner],
     create: [],
     update: [...restrictOwner],
@@ -34,7 +52,7 @@ module.exports = {
 
   after: {
     all: [],
-    find: [],
+    find: [...populateUser],
     get: [],
     create: [],
     update: [],
