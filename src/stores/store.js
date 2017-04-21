@@ -16,7 +16,10 @@ class Store {
     this.service = feathersClient().service(serviceName);
     this.serviceName = serviceName;
     this.service.on('patched', entity => {
-      this.updateUI(entity);
+      this.updateEvent(entity);
+    })
+    this.service.on('created', entity => {
+      this.addEvent(entity);
     })
   }
 
@@ -100,7 +103,15 @@ class Store {
   }
 
   @action
-  updateUI = (entity) => {
+  addEvent = (entity) => {
+    const found = this.entities.find(item => item._id === entity._id)
+    if(!found){
+      this.entities.push(entity)
+    }
+  }
+
+  @action
+  updateEvent = (entity) => {
     this.entities = this.entities.map(item => item._id === entity._id ? Object.assign(item, entity) : item);
   }
 
