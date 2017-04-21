@@ -17,7 +17,7 @@ const updateIssue = () => {
     const ticket = hook.result;
     const issueId = ticket.issues[0];
     return hook.app.service('issues')
-      .patch(issueId, {ticketId:ticket})
+      .patch(issueId, {ticketId:ticket,status:'assigned'})
       .then(result => {
         hook.app.service('issues').emit('ticketAssigned',{ ticketAssigned:result });
       });

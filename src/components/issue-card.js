@@ -55,12 +55,13 @@ class IssueCard extends Component {
             <p><Icon name='calendar'/><span className="card-label">Posted on</span> : {moment(issue.createdAt).format('DD-MM-YYYY h:mm a')}</p>
             <p><Icon name='desktop'/><span className="card-label">Category</span> : {_.capitalize(issue.category)}</p>
             <p><Icon name='alarm'/><span className="card-label">Urgency</span> :  {_.capitalize(issue.urgency)}</p>
+            <p><Icon name='circle outline'/><span className="card-label">Status</span> : {_.capitalize(issue.status)}</p>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">
-            <Link to={`/issues/edit/${issue._id}`} className="ui basic button teal">Edit</Link>
-            <Button basic color="red" onClick={this.handleOpen}>Delete</Button>
+            <Link to={`/issues/edit/${issue._id}`} className="ui basic button teal" disabled={!_.isEmpty(issue.ticketId)}>Edit</Link>
+            <Button basic color="red" onClick={this.handleOpen} disabled={!_.isEmpty(issue.ticketId)}>Delete</Button>
           </div>
         </Card.Content>
       </Card>
