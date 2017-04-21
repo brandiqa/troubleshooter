@@ -44,10 +44,10 @@ class BacklogCard extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <div className="ui two buttons">
-            <Button color="green" onClick={this.handleSubmitTicket}>Submit Ticket</Button>
-            <Button color="teal" onClick={this.handleMergeTicket}>Merge Ticket</Button>
-          </div>
+          <Button.Group>
+            <Button color="green" onClick={this.handleSubmitTicket} disabled={issue.ticketId}>Submit Ticket</Button>
+            <Button color="teal" onClick={this.handleMergeTicket} disabled={issue.ticketId}>Merge Ticket</Button>
+          </Button.Group>
         </Card.Content>
       </Card>
     )
