@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Icon,  Modal } from 'semantic-ui-react'
-import { Link } from 'react-router-dom';
+import { Card, Button, Icon } from 'semantic-ui-react'
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -11,7 +10,7 @@ class BacklogCard extends Component {
     let value = issue;
     delete issue.user;
     const values = { issues: [value] };
-    createTicket(values);
+    submitTicket(values);
   }
 
   handleMergeTicket = () => {
@@ -46,8 +45,8 @@ class BacklogCard extends Component {
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">
-            <Button color="green" onClick={this.handleSubmitTicket}>Submit New Ticket</Button>
-            <Button color="teal" onClick={this.handleMergeTicket}>Merge Existing Ticket</Button>
+            <Button color="green" onClick={this.handleSubmitTicket}>Submit Ticket</Button>
+            <Button color="teal" onClick={this.handleMergeTicket}>Merge Ticket</Button>
           </div>
         </Card.Content>
       </Card>

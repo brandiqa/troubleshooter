@@ -4,10 +4,10 @@ import MobxReactForm from 'mobx-react-form';
 import validatorjs from 'validatorjs';
 import IssueForm from '../components/issue-form';
 import authStore from '../stores/auth-store';
-import Store from '../stores/store';
+import createStore from '../stores/store';
 import { categoryOptions, priorityOptions } from '../config/options';
 
-const store = new Store('issues');
+const store = createStore('issues');
 
 const fields = {
   category: {

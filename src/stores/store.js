@@ -5,16 +5,21 @@ import { feathersClient } from './client';
 class Store {
 
   service = null;
-
-  constructor(serviceName) {
-    this.service = feathersClient().service(serviceName);
-  }
-
+  serviceName = null;
   @observable errors = {};
   @observable entity = {};
   @observable entities = [];
   @observable loading = false;
   @observable redirect = false;
+
+  constructor(serviceName) {
+    this.service = feathersClient().service(serviceName);
+    this.serviceName = serviceName;
+    console.info("init store:", serviceName)
+    this.service.on('patched', entity => {
+      console.log(serviceName,'patched',entity)
+    })
+  }
 
   handleFeathersError = (err) => {
     if( err.code === 400) {
@@ -94,6 +99,17 @@ class Store {
       })
       .catch(err => this.handleFeathersError(err))
   }
+
 }
 
-export default Store;
+let stores = [];
+
+export default function createStore(serviceName) {
+  let instance = false;
+  _.each(stores, store => instance  = store.serviceName === serviceName ? store : false)
+  if(!instance) {
+    instance = new Store(serviceName);
+    stores.push(instance);
+  }
+  return instance;
+}

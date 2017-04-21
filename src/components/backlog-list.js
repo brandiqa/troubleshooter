@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Message, Icon, Card } from 'semantic-ui-react';
 import BacklogCard from './backlog-card';
-import Store from '../stores/store';
+import createStore from '../stores/store';
 
 @observer
 class BacklogList extends Component {
@@ -12,8 +12,8 @@ class BacklogList extends Component {
 
   constructor(props) {
     super(props);
-    this.store = new Store('issues');
-    this.ticketStore = new Store('tickets');
+    this.store = createStore('issues');
+    this.ticketStore = createStore('tickets');
   }
 
   componentDidMount() {

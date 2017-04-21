@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { Message, Icon, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import IssueCard from './issue-card';
-import Store from '../stores/store';
+import createStore from '../stores/store';
 
 @observer
 class IssueList extends Component {
@@ -12,7 +12,7 @@ class IssueList extends Component {
 
   constructor(props) {
     super(props);
-    this.store = new Store('issues');
+    this.store = createStore('issues');
   }
 
   componentDidMount() {
