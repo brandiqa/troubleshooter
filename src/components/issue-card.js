@@ -3,6 +3,7 @@ import { Card, Button, Icon,  Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import moment from 'moment';
+import classnames from 'classnames';
 
 class IssueCard extends Component {
 
@@ -60,7 +61,7 @@ class IssueCard extends Component {
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">
-            <Link to={`/issues/edit/${issue._id}`} className="ui basic button teal" disabled={!_.isEmpty(issue.ticketId)}>Edit</Link>
+            <Link to={`/issues/edit/${issue._id}`} className={classnames("ui basic button teal",{disabled:!_.isEmpty(issue.ticketId)})}>Edit</Link>
             <Button basic color="red" onClick={this.handleOpen} disabled={!_.isEmpty(issue.ticketId)}>Delete</Button>
           </div>
         </Card.Content>

@@ -17,10 +17,13 @@ class Store {
     this.serviceName = serviceName;
     this.service.on('patched', entity => {
       this.updateEvent(entity);
-    })
+    });
     this.service.on('created', entity => {
       this.addEvent(entity);
-    })
+    });
+    this.service.on('removed', entity => {
+      this.removeEvent(entity);
+    });
   }
 
   handleFeathersError = (err) => {
@@ -113,6 +116,14 @@ class Store {
   @action
   updateEvent = (entity) => {
     this.entities = this.entities.map(item => item._id === entity._id ? Object.assign(item, entity) : item);
+  }
+
+  @action
+  removeEvent = (entity) => {
+    const found = this.entities.find(item => item._id === entity._id)
+    if(found){
+        this.entities = this.entities.filter(item => item._id !== entity._id)
+    }
   }
 
 }
