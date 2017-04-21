@@ -7,11 +7,11 @@
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const ticket = new mongooseClient.Schema({
-    issues: { type: Array, ref:'issue', required: true },
+    issues: [{type: mongooseClient.Schema.ObjectId, ref:'issue'}],
     status: { type: String, required: true, default:'new' },
     assignedTo: {type: mongooseClient.Schema.ObjectId, ref:'user', required: true},
-    comments: { type: Array, required: false},
-    logs: { type: Array, required: false},
+    comments: [{type: mongooseClient.Schema.ObjectId, ref:'comment'}],
+    logs: [{type: mongooseClient.Schema.ObjectId, ref:'ticketlog'}],
     createdAt: { type: Date, default: Date.now }
   });
 

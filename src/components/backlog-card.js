@@ -6,10 +6,16 @@ import moment from 'moment';
 
 class BacklogCard extends Component {
 
-  handleNewTicket = () => {
-    const { issue, user, createTicket } =  this.props;
-    const values = { issues: [issue], assignedTo: user };
+  handleSubmitTicket = () => {
+    const { issue, submitTicket } =  this.props;
+    let value = issue;
+    delete issue.user;
+    const values = { issues: [value] };
     createTicket(values);
+  }
+
+  handleMergeTicket = () => {
+    console.log('merge');
   }
 
   render() {
@@ -40,8 +46,8 @@ class BacklogCard extends Component {
         </Card.Content>
         <Card.Content extra>
           <div className="ui two buttons">
-            <Button color="green" onClick={this.handleNewTicket}>New Ticket</Button>
-            <Button color="teal">Assign Ticket</Button>
+            <Button color="green" onClick={this.handleSubmitTicket}>Submit New Ticket</Button>
+            <Button color="teal" onClick={this.handleMergeTicket}>Merge Existing Ticket</Button>
           </div>
         </Card.Content>
       </Card>

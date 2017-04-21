@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { Message, Icon, Card } from 'semantic-ui-react';
 import BacklogCard from './backlog-card';
 import Store from '../stores/store';
-import authStore from '../stores/auth-store';
 
 @observer
 class BacklogList extends Component {
@@ -49,7 +48,7 @@ class BacklogList extends Component {
       </Message>
     )
 
-    const backlogCardItems = issues.map(issue => ( <BacklogCard key={issue._id} issue={issue} user={authStore.user} createTicket={this.ticketStore.create} /> ));
+    const backlogCardItems = issues.map(issue => ( <BacklogCard key={issue._id} issue={issue} submitTicket={this.ticketStore.create} /> ));
 
     const issueCards = (
       <Card.Group>
