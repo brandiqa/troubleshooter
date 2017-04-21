@@ -15,9 +15,8 @@ class Store {
   constructor(serviceName) {
     this.service = feathersClient().service(serviceName);
     this.serviceName = serviceName;
-    console.info("init store:", serviceName)
     this.service.on('patched', entity => {
-      console.log(serviceName,'patched',entity)
+      this.updateUI(entity);
     })
   }
 
@@ -100,6 +99,11 @@ class Store {
       .catch(err => this.handleFeathersError(err))
   }
 
+  @action
+  updateUI = (entity) => {
+    this.entities = this.entities.map(item => item._id === entity._id ? Object.assign(item, entity) : item);
+  }
+
 }
 
 let stores = [];
@@ -112,4 +116,8 @@ export default function createStore(serviceName) {
     stores.push(instance);
   }
   return instance;
+}
+
+export function destroy() {
+  stores = [];
 }

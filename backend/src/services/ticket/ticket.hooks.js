@@ -2,12 +2,34 @@
 
 const { authenticate } = require('feathers-authentication').hooks;
 
+// populate ticket.assignedTo (supply agent user)
+const assignAgent = () => {
+  return hook => {
+    const assignedTo = hook.params.user;
+    hook.data.assignedTo = assignedTo;
+    return Promise.resolve(hook);
+  };
+};
+
+// populate issue.ticketId
+const updateIssue = () => {
+  return hook => {
+    const ticket = hook.result;
+    const issueId = ticket.issues[0];
+    return hook.app.service('issues')
+      .patch(issueId, {ticketId:ticket})
+      .then(result => {
+        hook.app.service('issues').emit('ticketAssigned',{ ticketAssigned:result });
+      });
+  };
+};
+
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [],
+    create: [assignAgent()],
     update: [],
     patch: [],
     remove: []
@@ -17,7 +39,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [updateIssue()],
     update: [],
     patch: [],
     remove: []

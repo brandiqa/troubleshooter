@@ -8,7 +8,6 @@ class BacklogCard extends Component {
   handleSubmitTicket = () => {
     const { issue, submitTicket } =  this.props;
     let value = issue;
-    delete issue.user;
     const values = { issues: [value] };
     submitTicket(values);
   }
@@ -45,8 +44,8 @@ class BacklogCard extends Component {
         </Card.Content>
         <Card.Content extra>
           <Button.Group>
-            <Button color="green" onClick={this.handleSubmitTicket} disabled={issue.ticketId}>Submit Ticket</Button>
-            <Button color="teal" onClick={this.handleMergeTicket} disabled={issue.ticketId}>Merge Ticket</Button>
+            <Button color="green" onClick={this.handleSubmitTicket} disabled={!_.isEmpty(issue.ticketId)}>Submit Ticket</Button>
+            <Button color="teal" onClick={this.handleMergeTicket} disabled={!_.isEmpty(issue.ticketId)}>Merge Ticket</Button>
           </Button.Group>
         </Card.Content>
       </Card>

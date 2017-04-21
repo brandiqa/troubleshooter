@@ -13,6 +13,9 @@ class BacklogList extends Component {
   constructor(props) {
     super(props);
     this.store = createStore('issues');
+    this.store.service.on('ticketAssigned', entity => {
+      console.log('issues','ticketAssigned',entity)
+    })
     this.ticketStore = createStore('tickets');
   }
 
