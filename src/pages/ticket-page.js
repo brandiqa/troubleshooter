@@ -14,11 +14,11 @@ class TicketPage extends Component {
             Submit Ticket
           </Menu.Item>
         </Menu>
-        <Grid columns={12}>
-          <Grid.Column>
+        <Grid>
+          <Grid.Column width={4}>
              <Route component={TicketList} path="/tickets"/>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={12}>
             <TicketDetail/>
             <Route component={TicketDetail} path="/tickets/:id"/>
           </Grid.Column>
