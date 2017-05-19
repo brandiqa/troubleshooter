@@ -48,3 +48,9 @@ npm start
 ```
 
 Your default web browser will be launched automatically with the url http://localhost:3000
+
+### Default Credentials
+You will be present with the login screen. Login as admin and create other users:
+
+email: admin@example.com
+password: admin
